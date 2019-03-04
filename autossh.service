@@ -1,0 +1,13 @@
+[Unit]
+Description=AutoSSH tunnel service, remote port 5000, put in /etc/systemd/system
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Environment="AUTOSSH_GATETIME=0"
+ExecStart=/usr/bin/autossh -M 0 -o "ServerAliveInterval 30" -o "ServerAliveCountMax 3" -NR 5001:localhost:22 USER@HOST -p 22
+Restart=always
+User=hkt
+
+[Install]
+WantedBy=multi-user.target
